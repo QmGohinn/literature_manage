@@ -1,4 +1,6 @@
 #include <_BK/Global/exeGlobal.h>
+#include <QDebug>
+#include <QMessageBox>
 
 int PRMS::g_currentRole;
 /// 用户列表
@@ -8,33 +10,78 @@ QVector<Reference> PRMS::g_referenceList;
 
 void PRMS::init()
 {
-    User* _simple = new User("simple", "simple", 0);
-    User* _admin = new User("admin", "admin", 1);
+    readUserFromJson("..\\json\\admin.json");
+    readReferenceFromJson("..\\json\\Reference.json");
+}
 
-    g_UserList.push_back(*_simple);
-    g_UserList.push_back(*_admin);
+void PRMS::readUserFromJson(QString _file)
+{
+    QFile file(_file);
+    file.open(QIODevice::ReadOnly);
+    QByteArray data = file.readAll();
+    file.close();
 
-    Reference* _r1 = new Reference("DOI1", "author1", "title1", "journal1", "year1", "Article");
-    Reference* _r2 = new Reference("DOI2", "author2", "title2", "journal2", "year2", "Review");
-    Reference* _r3 = new Reference("DOI3", "author3", "title3", "journal3", "year3", "Review");
-    Reference* _r4 = new Reference("DOI4", "author4", "title4", "journal4", "year4", "Article");
-    Reference* _r5 = new Reference("DOI5", "author5", "title5", "journal5", "year5", "Review");
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
+    if(parseError.error != QJsonParseError::NoError){
+        return;
+    }
+    QJsonObject obj = doc.object();
+    if(obj.contains("User"))
+    {
+        QJsonValue arrayTemp = obj.value("User");
+        QJsonArray array = arrayTemp.toArray();
 
-    Reference* _r6 = new Reference("DOI6", "author6", "title6", "journal6", "year6", "Review");
-    Reference* _r7 = new Reference("DOI7", "author7", "title7", "journal7", "year7", "Article");
-    Reference* _r8 = new Reference("DOI8", "author8", "title8", "journal8", "year8", "Review");
-    Reference* _r9 = new Reference("DOI9", "author9", "title9", "journal9", "year9", "Review");
-    Reference* _ra = new Reference("DOIa", "authora", "titlea", "journala", "yeara", "Review");
+        for(int i = 0; i < array.size(); ++i){
+            QJsonValue sub = array.at(i);
+            QJsonObject subObj = sub.toObject();
+            QJsonValue name = subObj.value("name");
+            QJsonValue pwd = subObj.value("pwd");
+            QJsonValue role = subObj.value("role");
 
-    g_referenceList.push_back(*_r1);
-    g_referenceList.push_back(*_r2);
-    g_referenceList.push_back(*_r3);
-    g_referenceList.push_back(*_r4);
-    g_referenceList.push_back(*_r5);
+            User* _user = new User(name.toString(), pwd.toString(), role.toInt());
+            g_UserList.push_back(*_user);
+        }
+    }
+}
 
-    g_referenceList.push_back(*_r6);
-    g_referenceList.push_back(*_r7);
-    g_referenceList.push_back(*_r8);
-    g_referenceList.push_back(*_r9);
-    g_referenceList.push_back(*_ra);
+void PRMS::readReferenceFromJson(QString _file)
+{
+    QFile file(_file);
+    file.open(QIODevice::ReadOnly);
+    QByteArray data = file.readAll();
+    file.close();
+
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
+    if(parseError.error != QJsonParseError::NoError){
+        qDebug() << parseError.error;
+        return;
+    }
+    QJsonObject obj = doc.object();
+    if(obj.contains("Reference"))
+    {
+        QJsonValue arrayTemp = obj.value("Reference");
+        QJsonArray array = arrayTemp.toArray();
+
+        g_referenceList.clear();
+
+        for(int i = 0; i < array.size(); ++i){
+            QJsonValue sub = array.at(i);
+            QJsonObject subObj = sub.toObject();
+            QJsonValue doi = subObj.value("doi");
+            QJsonValue author = subObj.value("author");
+            QJsonValue title = subObj.value("title");
+            QJsonValue journal = subObj.value("journal");
+            QJsonValue year = subObj.value("year");
+            QJsonValue type = subObj.value("type");
+
+            Reference* _r = new Reference(doi.toString(), author.toString(), title.toString(), journal.toString(), year.toString(), type.toString());
+            g_referenceList.push_back(*_r);
+        }
+    }
+    else{
+        QMessageBox::warning(nullptr, "提 示", "导入的json文件格式不正确!", "知道了");
+        return;
+    }
 }

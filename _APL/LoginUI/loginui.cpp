@@ -14,8 +14,8 @@ UserLoginForm::UserLoginForm(QWidget *parent) :
     ui->m_LoginBtn->setDefault(true);
 
     /// 方便起见 给UI预设账号 密码
-    ui->m_AccountLineEdit->setText("simple");
-    ui->m_PasswordLineEdit->setText("simple");
+    ui->m_AccountLineEdit->setText("admin");
+    ui->m_PasswordLineEdit->setText("admin");
 }
 
 UserLoginForm::~UserLoginForm()

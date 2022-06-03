@@ -19,7 +19,7 @@ private:
     QString m_type = "";
 
 public:
-    QString getDOI(){
+    QString getDOI() const{
         return m_DOI;
     }
 

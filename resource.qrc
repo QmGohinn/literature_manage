@@ -5,5 +5,8 @@
         <file>res/titleico/people.ico</file>
         <file>res/LoginUI/label.ico</file>
         <file>res/logo/logo.ico</file>
+        <file>res/MainUI/add.ico</file>
+        <file>res/MainUI/save.ico</file>
+        <file>res/MainUI/open.ico</file>
     </qresource>
 </RCC>

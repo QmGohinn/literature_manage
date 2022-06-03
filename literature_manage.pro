@@ -23,10 +23,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     _APL/LoginUI/loginui.ui \
+    _APL/addRef/referadd.ui \
     _APL/mainUI/mainuiform.ui
 
 HEADERS += \
     _APL/LoginUI/loginui.h \
+    _APL/addRef/referadd.h \
     _APL/mainUI/mainuiform.h \
     _BK/Global/exeGlobal.h \
     _BK/Reference/Reference.h \
@@ -34,6 +36,7 @@ HEADERS += \
 
 SOURCES += \
     _APL/LoginUI/loginui.cpp \
+    _APL/addRef/referadd.cpp \
     _APL/mainUI/mainuiform.cpp \
     _BK/Global/exeGlobal.cpp \
     _BK/Reference/Reference.cpp \
