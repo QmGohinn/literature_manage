@@ -1,0 +1,14 @@
+{
+    "User": [
+        {
+            "name": "admin",
+            "pwd": "admin",
+            "role": 1
+        },
+        {
+            "name":"simple",
+            "pwd":"simple",
+            "role":0
+        }
+    ]
+}
