@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/LoginUI/close.ico</file>
+        <file>res/LoginUI/login.ico</file>
+        <file>res/titleico/people.ico</file>
+        <file>res/LoginUI/label.ico</file>
+        <file>res/logo/logo.ico</file>
+    </qresource>
+</RCC>
