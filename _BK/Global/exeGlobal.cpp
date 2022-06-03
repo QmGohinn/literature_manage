@@ -1,5 +1,4 @@
 #include <_BK/Global/exeGlobal.h>
-#include <QDebug>
 #include <QMessageBox>
 
 int PRMS::g_currentRole;
@@ -55,7 +54,7 @@ void PRMS::readReferenceFromJson(QString _file)
     QJsonParseError parseError;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
     if(parseError.error != QJsonParseError::NoError){
-        qDebug() << parseError.error;
+        QMessageBox::warning(nullptr, "提 示", "JSON文件格式错误!", "知道了");
         return;
     }
     QJsonObject obj = doc.object();

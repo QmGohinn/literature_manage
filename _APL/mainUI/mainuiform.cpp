@@ -5,8 +5,6 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
-#include <QTextStream>
-
 mainUIForm::mainUIForm(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::mainUIForm)
@@ -91,9 +89,8 @@ void mainUIForm::TableToJson(QString _file)
 
     //JsonDocument转为ByteArray
     QByteArray byteArray = jsonDocument.toJson(QJsonDocument::Indented);
-    QTextStream out(&file);
-    out << byteArray;
-
+    QString _jsonStr(byteArray.data());
+    file.write(_jsonStr.toUtf8());
     file.close();
 }
 
