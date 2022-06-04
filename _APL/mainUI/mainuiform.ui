@@ -208,9 +208,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_O"/>
+   <addaction name="separator"/>
    <addaction name="action_N"/>
+   <addaction name="separator"/>
+   <addaction name="action_O"/>
+   <addaction name="separator"/>
    <addaction name="action_S"/>
+   <addaction name="separator"/>
   </widget>
   <action name="action_N">
    <property name="icon">
